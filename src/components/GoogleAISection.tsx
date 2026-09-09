@@ -1,180 +1,221 @@
+"use client";
+
 import {
   Sparkles,
   Cpu,
   HardDrive,
-  Image as ImageIcon,
   Video,
-  UserCheck,
-  Clock,
-  ArrowRight,
   ShieldCheck,
   CheckCircle2,
+  ArrowRight,
+  MessageCircle,
+  Zap,
+  Clock,
+  UserCheck,
 } from "lucide-react";
+import { motion } from "motion/react";
+import { cn } from "@/lib/utils";
 import { createWhatsAppLink, WHATSAPP_DISPLAY } from "@/lib/whatsapp";
 import { products } from "@/data/products";
+
+const features = [
+  {
+    icon: Sparkles,
+    badge: "Advanced Model",
+    title: "Gemini 1.5 Pro AI",
+    desc: "Coding, research, reasoning and daily problem-solving powered by Google's premier multimodal model.",
+  },
+  {
+    icon: ShieldCheck,
+    badge: "18 Months • ৳350",
+    title: "Personal Mail Activation",
+    desc: "Activated safely on your personal Gmail account with 18 months full replacement warranty.",
+    highlight: true,
+  },
+  {
+    icon: HardDrive,
+    badge: "5,000 GB Storage",
+    title: "5 TB Cloud Storage",
+    desc: "Massive Google One cloud space for high-res photos, 4K videos, and files directly in your Google Drive.",
+  },
+  {
+    icon: Cpu,
+    badge: "Dev & Image Gen",
+    title: "Antigravity & Nano Banana",
+    desc: "AI developer platform integration with high-speed coding assistance and studio-grade image generation.",
+  },
+  {
+    icon: Video,
+    badge: "Cinematic Video",
+    title: "Veo 3.1 Video AI Generation",
+    desc: "Render cinematic AI video scenes, animations, and video content with cutting-edge prompt control.",
+  },
+];
 
 export default function GoogleAISection() {
   const geminiProduct =
     products.find((p) => p.id === "gemini-ai-pro") || products[0];
 
-  const features = [
-    {
-      name: "Gemini Pro",
-      tagline: "Advanced AI Model",
-      description:
-        "🤖 Coding, Research & দৈনন্দিন কাজের জন্য সবচেয়ে শক্তিশালী Google AI Assistant।",
-      icon: Sparkles,
-      color: "from-purple-500 to-indigo-600",
-    },
-    {
-      name: "Antigravity",
-      tagline: "AI Development Platform",
-      description:
-        "💻 AI-powered coding & development platform speed analysis and project creation.",
-      icon: Cpu,
-      color: "from-indigo-600 to-blue-600",
-    },
-    {
-      name: "Nano Banana Pro",
-      tagline: "Advanced Image AI",
-      description:
-        "🎨 Advanced AI image generation & high-resolution photo editing in seconds.",
-      icon: ImageIcon,
-      color: "from-amber-500 to-orange-600",
-    },
-    {
-      name: "Veo 3.1",
-      tagline: "High-Quality Video AI",
-      description:
-        "🎬 AI দিয়ে cinematic high-quality video তৈরি ও animation rendering।",
-      icon: Video,
-      color: "from-pink-500 to-purple-600",
-    },
-    {
-      name: "5 TB Cloud Storage",
-      tagline: "5,000 GB Space",
-      description:
-        "☁️ ছবি, ভিডিও ও ফাইলের জন্য বিশাল cloud storage আপনার Google Drive-এ।",
-      icon: HardDrive,
-      color: "from-blue-500 to-teal-600",
-    },
-    {
-      name: "Personal Account",
-      tagline: "100% Personal Mail",
-      description:
-        "👤 নিজের personal Gmail account-এ সরাসরি ব্যবহার করতে পারবেন safely।",
-      icon: UserCheck,
-      color: "from-emerald-500 to-teal-600",
-    },
-    {
-      name: "18 Months Validity",
-      tagline: "Full Warranty",
-      description:
-        "⏳ ১৮ মাসের দীর্ঘ মেয়াদী subscription guarantee hassle-free usage-এর জন্য।",
-      icon: Clock,
-      color: "from-purple-600 to-pink-600",
-    },
-  ];
-
   return (
     <section
       id="google-ai"
-      className="py-16 md:py-24 bg-gradient-to-b from-white via-purple-100/50 to-white relative overflow-hidden"
+      className="py-20 md:py-28 bg-white px-4 sm:px-6 relative min-h-screen overflow-hidden"
     >
-      {/* Decorative background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-purple-300/20 rounded-full blur-3xl pointer-events-none"></div>
+      {/* 1. Signature Masked Horizon Background Construction */}
+      <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,#f5f3ff_0px_1px,transparent_1px_8px)] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)] pointer-events-none"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(125%_125%_at_50%_10%,rgba(255,255,255,0)_35%,rgba(243,232,255,0.7)_70%,rgba(147,51,234,0.25)_100%)] pointer-events-none"></div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-600 text-white text-xs font-extrabold shadow-md shadow-purple-500/20">
-            <Sparkles className="w-4 h-4 text-amber-300" />
-            <span>🔥 Hot Special Offer — Only ৳350</span>
+      <div className="max-w-7xl mx-auto text-center relative z-10">
+        {/* Section Heading with Staggered Entrance */}
+        <motion.div
+          initial={{ opacity: 0, transform: "translateY(20px)" }}
+          whileInView={{ opacity: 1, transform: "translateY(0)" }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="mb-14 sm:mb-16"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-100/90 border border-purple-200/80 text-purple-800 text-xs sm:text-sm font-bold shadow-xs mb-5">
+            <Sparkles className="w-4 h-4 text-purple-600 animate-pulse" />
+            <span>🔥 Mega Offer — Gemini AI Pro (18 Months @ ৳350)</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
-            Gemini AI Pro — 18 Months Package
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-5 text-balance">
+            Gemini AI Pro —{" "}
+            <span className="bg-gradient-to-r from-purple-600 via-purple-500 to-indigo-600 bg-clip-text text-transparent">
+              18 Months Package
+            </span>
           </h2>
 
-          <p className="text-base sm:text-lg text-slate-600">
-            Google-এর শক্তিশালী AI ecosystem পাবেন নিজের Personal Account-এ ১৮ মাসের জন্য মাত্র ৳৩৫০ টাকায়।
+          <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto text-pretty leading-relaxed">
+            Google-এর শক্তিশালী AI ইকোসিস্টেম এখন নিজের Personal Gmail অ্যাকাউন্টে ব্যবহার করুন ১৮ মাসের ফুল ওয়ারেন্টি সহ মাত্র ৳৩৫০ টাকায়।
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 text-xs sm:text-sm font-semibold text-slate-700 pt-2">
-            <span className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-purple-200 shadow-xs">
-              <CheckCircle2 className="w-4 h-4 text-purple-600" />
-              18 Months Full Validity
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs sm:text-sm font-semibold text-slate-700 pt-4">
+            <span className="flex items-center gap-1.5 bg-white/90 backdrop-blur-sm px-3.5 py-1.5 rounded-full border border-purple-200 shadow-xs">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              18 Months Guaranteed Access
             </span>
-            <span className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-purple-200 shadow-xs">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" />
-              Personal Gmail Account Activation
+            <span className="flex items-center gap-1.5 bg-white/90 backdrop-blur-sm px-3.5 py-1.5 rounded-full border border-purple-200 shadow-xs">
+              <ShieldCheck className="w-4 h-4 text-purple-600" />
+              Personal Gmail Activation
             </span>
+            <span className="flex items-center gap-1.5 bg-white/90 backdrop-blur-sm px-3.5 py-1.5 rounded-full border border-purple-200 shadow-xs">
+              <Zap className="w-4 h-4 text-amber-500" />
+              5-30 Min Fast WhatsApp Delivery
+            </span>
+          </div>
+        </motion.div>
+
+        {/* Feature Hero Responsive Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-y-8 sm:gap-y-12 md:gap-y-14 gap-x-8 lg:gap-x-12 mb-16">
+          {/* Row 1: 3 Cards (Middle card raised with shadow and desktop scale) */}
+          {features.slice(0, 3).map((f, i) => (
+            <FeatureCard key={i} {...f} />
+          ))}
+
+          {/* Row 2: 2 Cards Centered */}
+          <div className="md:col-span-3 flex flex-col md:flex-row justify-center gap-y-8 sm:gap-y-12 md:gap-y-14 gap-x-8 lg:gap-x-12">
+            {features.slice(3).map((f, i) => (
+              <div key={i} className="md:w-1/3">
+                <FeatureCard {...f} />
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Feature Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {features.map((feature, idx) => {
-            const Icon = feature.icon;
-            return (
-              <div
-                key={idx}
-                className="bg-white/90 backdrop-blur-md rounded-3xl p-6 border border-purple-100/90 shadow-sm hover:shadow-xl hover:shadow-purple-500/10 hover:border-purple-300 transition-all duration-300 flex flex-col justify-between group"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div
-                      className={`w-12 h-12 rounded-2xl bg-gradient-to-tr ${feature.color} text-white flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-200`}
-                    >
-                      <Icon className="w-6 h-6" />
-                    </div>
-                    <span className="text-[11px] font-extrabold px-2.5 py-1 rounded-full bg-purple-50 text-purple-700 border border-purple-100">
-                      {feature.tagline}
-                    </span>
-                  </div>
+        {/* Central Product Launch & WhatsApp Activation Dock */}
+        <motion.div
+          initial={{ opacity: 0, transform: "translateY(24px)" }}
+          whileInView={{ opacity: 1, transform: "translateY(0)" }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="max-w-4xl mx-auto rounded-3xl bg-gradient-to-r from-purple-950 via-slate-900 to-indigo-950 p-6 sm:p-10 text-white shadow-2xl shadow-purple-950/40 border border-purple-500/30 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden text-left"
+        >
+          {/* Ambient Glows inside card */}
+          <div className="absolute -right-12 -bottom-12 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute -left-12 -top-12 w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
 
-                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-purple-700 transition-colors mb-2">
-                    {feature.name}
-                  </h3>
-
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                    {feature.description}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Bottom Banner Callout */}
-        <div className="bg-gradient-to-r from-purple-900 via-purple-800 to-indigo-900 rounded-3xl p-8 sm:p-10 text-white shadow-2xl shadow-purple-900/30 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
-          <div className="absolute -right-10 -bottom-10 w-60 h-60 bg-purple-500/20 rounded-full blur-3xl"></div>
-
-          <div className="space-y-2 text-center md:text-left relative z-10">
-            <span className="text-xs font-bold text-amber-300 uppercase tracking-widest">
+          <div className="space-y-2 relative z-10 text-center md:text-left">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-bold uppercase tracking-wider">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
               Limited Stock Deal
-            </span>
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
-              Get Gemini AI Pro 18 Months for ৳350
+            </div>
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              Get Gemini AI Pro (18 Months) for ৳350
             </h3>
-            <p className="text-purple-200 text-sm max-w-xl">
-              Instant activation directly on your WhatsApp ({WHATSAPP_DISPLAY}) with full warranty support.
+            <p className="text-purple-200/80 text-xs sm:text-sm max-w-xl">
+              Instant activation directly on your WhatsApp ({WHATSAPP_DISPLAY}) with 100% personal account warranty.
             </p>
           </div>
 
-          <div className="relative z-10 flex flex-col sm:flex-row items-center gap-3 shrink-0">
+          <div className="relative z-10 flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full sm:w-auto">
             <a
               href={createWhatsAppLink(geminiProduct)}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-4 rounded-full bg-white text-purple-900 font-extrabold text-base hover:bg-purple-50 shadow-lg hover:scale-105 transition-all duration-200 flex items-center gap-2"
+              className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-500 text-white font-extrabold text-base shadow-lg shadow-emerald-500/30 hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center gap-2.5"
             >
+              <MessageCircle className="w-5 h-5 fill-white text-emerald-600" />
               <span>Buy Now via WhatsApp</span>
               <ArrowRight className="w-5 h-5" />
             </a>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 }
+
+const FeatureCard = ({
+  icon: Icon,
+  badge,
+  title,
+  desc,
+  highlight,
+}: {
+  icon: any;
+  badge?: string;
+  title: string;
+  desc: string;
+  highlight?: boolean;
+}) => (
+  <div
+    className={cn(
+      "flex flex-col items-center group transition-all duration-300 p-6 sm:p-8 rounded-3xl bg-white/85 backdrop-blur-md border border-purple-100/90 shadow-sm hover:bg-white hover:border-purple-300 hover:shadow-xl hover:shadow-purple-500/10",
+      highlight &&
+        "md:scale-105 bg-white border-purple-300 shadow-2xl shadow-purple-500/15 ring-2 ring-purple-500/20"
+    )}
+  >
+    <div
+      className={cn(
+        "w-14 h-14 rounded-full flex items-center justify-center mb-5 transition-all duration-300",
+        highlight
+          ? "bg-gradient-to-tr from-purple-600 via-purple-700 to-indigo-600 text-white shadow-xl shadow-purple-500/40 scale-110"
+          : "bg-purple-50 text-purple-600 group-hover:bg-purple-600 group-hover:text-white group-hover:scale-105"
+      )}
+    >
+      <Icon className="w-7 h-7" />
+    </div>
+
+    {badge && (
+      <span
+        className={cn(
+          "text-[11px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full mb-3 shadow-2xs",
+          highlight
+            ? "bg-emerald-100 text-emerald-800 border border-emerald-200"
+            : "bg-purple-50 text-purple-700 border border-purple-100"
+        )}
+      >
+        {badge}
+      </span>
+    )}
+
+    <h3 className="text-xl font-bold mb-2.5 text-slate-900 tracking-tight text-center group-hover:text-purple-700 transition-colors">
+      {title}
+    </h3>
+    <p className="text-slate-600 leading-relaxed text-sm max-w-xs mx-auto text-pretty text-center">
+      {desc}
+    </p>
+  </div>
+);
+
