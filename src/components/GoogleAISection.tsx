@@ -124,43 +124,7 @@ export default function GoogleAISection() {
         </div>
 
         {/* Central Product Launch & WhatsApp Activation Dock */}
-        <motion.div
-          initial={{ opacity: 0, transform: "translateY(24px)" }}
-          whileInView={{ opacity: 1, transform: "translateY(0)" }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.15 }}
-          className="max-w-4xl mx-auto rounded-3xl bg-gradient-to-r from-purple-950 via-slate-900 to-indigo-950 p-6 sm:p-10 text-white shadow-2xl shadow-purple-950/40 border border-purple-500/30 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden text-left"
-        >
-          {/* Ambient Glows inside card */}
-          <div className="absolute -right-12 -bottom-12 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
-          <div className="absolute -left-12 -top-12 w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
-
-          <div className="space-y-2 relative z-10 text-center md:text-left">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-bold uppercase tracking-wider">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-              Limited Stock Deal
-            </div>
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-              Get Gemini AI Pro (18 Months) for ৳350
-            </h3>
-            <p className="text-purple-200/80 text-xs sm:text-sm max-w-xl">
-              Instant activation directly on your WhatsApp ({WHATSAPP_DISPLAY}) with 100% personal account warranty.
-            </p>
-          </div>
-
-          <div className="relative z-10 flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full sm:w-auto">
-            <a
-              href={createWhatsAppLink(geminiProduct)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-500 text-white font-extrabold text-base shadow-lg shadow-emerald-500/30 hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center gap-2.5"
-            >
-              <MessageCircle className="w-5 h-5 fill-white text-emerald-600" />
-              <span>Buy Now via WhatsApp</span>
-              <ArrowRight className="w-5 h-5" />
-            </a>
-          </div>
-        </motion.div>
+        
       </div>
     </section>
   );

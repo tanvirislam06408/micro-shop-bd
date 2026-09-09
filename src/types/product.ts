@@ -20,6 +20,8 @@ export interface Product {
   features: string[];
   iconName: string;
   color?: string;
+  logoUrl?: string;
+  imageUrl?: string;
   plans?: {
     name: string;
     price: string;

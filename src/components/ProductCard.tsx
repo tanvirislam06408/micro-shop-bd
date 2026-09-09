@@ -3,17 +3,8 @@
 import { useState } from "react";
 import { Product } from "@/types/product";
 import { createWhatsAppLink, createGeneralWhatsAppLink } from "@/lib/whatsapp";
+import ProductBrandLogo from "@/components/ProductBrandLogo";
 import {
-  Sparkles,
-  MessageSquare,
-  BrainCircuit,
-  Palette,
-  Search,
-  Image as ImageIcon,
-  Code,
-  Video,
-  PenTool,
-  Terminal,
   Check,
   MessageCircle,
   ArrowUpRight,
@@ -37,47 +28,20 @@ export default function ProductCard({ product }: ProductCardProps) {
     ? selectedPlan.oldPrice
     : product.oldPrice;
 
-  // Icon mapping
-  const getProductIcon = (iconName: string) => {
-    const props = { className: "w-6 h-6 text-white" };
-    switch (iconName) {
-      case "Sparkles":
-        return <Sparkles {...props} />;
-      case "MessageSquare":
-        return <MessageSquare {...props} />;
-      case "BrainCircuit":
-        return <BrainCircuit {...props} />;
-      case "Palette":
-        return <Palette {...props} />;
-      case "Search":
-        return <Search {...props} />;
-      case "Image":
-        return <ImageIcon {...props} />;
-      case "Code":
-        return <Code {...props} />;
-      case "Video":
-        return <Video {...props} />;
-      case "PenTool":
-        return <PenTool {...props} />;
-      case "Terminal":
-        return <Terminal {...props} />;
-      default:
-        return <Sparkles {...props} />;
-    }
-  };
-
   const whatsappUrl = createWhatsAppLink(product, selectedPlan);
 
   return (
     <div className="bg-white rounded-3xl border border-purple-100 p-5 sm:p-6 shadow-sm hover:shadow-xl hover:shadow-purple-500/10 hover:border-purple-300 transition-all duration-300 flex flex-col justify-between relative group">
-      {/* Top badges */}
+      {/* Top badges & Brand Logo */}
       <div className="flex items-center justify-between gap-2 mb-4">
-        <div
-          className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${
-            product.color || "from-purple-600 to-indigo-600"
-          } flex items-center justify-center shrink-0 shadow-md shadow-purple-500/20 group-hover:scale-105 transition-transform duration-200`}
-        >
-          {getProductIcon(product.iconName)}
+        <div className="w-14 h-14 rounded-2xl bg-white border border-slate-200/80 p-2 shadow-xs flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:border-purple-300 group-hover:shadow-md transition-all duration-200">
+          <ProductBrandLogo
+            productId={product.id}
+            productName={product.name}
+            logoUrl={product.logoUrl}
+            imageUrl={product.imageUrl}
+            className="w-10 h-10"
+          />
         </div>
 
         <div className="flex items-center gap-1.5 flex-wrap justify-end">

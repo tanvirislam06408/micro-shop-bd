@@ -93,7 +93,7 @@ export const HeroAiInfrastructure = () => {
       )}
 
       {/* Mobile Drawer Navigation */}
-      {isMobile && (
+      {/* {isMobile && (
         <div className="relative z-20 flex gap-4 justify-between items-center px-6 pt-5">
           <MotionDrawer
             direction="left"
@@ -167,7 +167,7 @@ export const HeroAiInfrastructure = () => {
             <span>WhatsApp Order</span>
           </TimelineAnimation>
         </div>
-      )}
+      )} */}
 
       {/* Desktop Header */}
       {!isMobile && (
