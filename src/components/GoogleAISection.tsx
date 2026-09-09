@@ -10,7 +10,7 @@ import {
   ShieldCheck,
   CheckCircle2,
 } from "lucide-react";
-import { createWhatsAppLink } from "@/lib/whatsapp";
+import { createWhatsAppLink, WHATSAPP_DISPLAY } from "@/lib/whatsapp";
 import { products } from "@/data/products";
 
 export default function GoogleAISection() {
@@ -158,7 +158,7 @@ export default function GoogleAISection() {
               Get Gemini AI Pro 18 Months for ৳350
             </h3>
             <p className="text-purple-200 text-sm max-w-xl">
-              Instant activation directly on your WhatsApp (01922458412) with full warranty support.
+              Instant activation directly on your WhatsApp ({WHATSAPP_DISPLAY}) with full warranty support.
             </p>
           </div>
 

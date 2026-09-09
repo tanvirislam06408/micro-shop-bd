@@ -16,7 +16,11 @@ import {
   HardDrive,
   Video,
 } from "lucide-react";
-import { createGeneralWhatsAppLink, createWhatsAppLink } from "@/lib/whatsapp";
+import {
+  createGeneralWhatsAppLink,
+  createWhatsAppLink,
+  WHATSAPP_DISPLAY,
+} from "@/lib/whatsapp";
 import { products } from "@/data/products";
 
 // Swiper core & module styles
@@ -87,7 +91,7 @@ export default function HeroSlider() {
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-full bg-white text-slate-800 font-bold text-base border-2 border-purple-200 shadow-xs hover:bg-purple-50/60 hover:border-purple-300 transition-all duration-200"
                 >
                   <MessageCircle className="w-5 h-5 text-emerald-600 fill-emerald-600/10" />
-                  <span>WhatsApp: 01922458412</span>
+                  <span>WhatsApp: {WHATSAPP_DISPLAY}</span>
                 </a>
               </div>
 

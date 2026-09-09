@@ -51,7 +51,8 @@ The central WhatsApp phone number and message link generator are configured in [
 
 ```typescript
 // src/lib/whatsapp.ts
-export const WHATSAPP_NUMBER = "8801922458412";
+export const WHATSAPP_NUMBER = "8801871138927";
+export const WHATSAPP_DISPLAY = "01871-138927";
 ```
 
 To change the business phone number in the future, simply update `WHATSAPP_NUMBER` in `src/lib/whatsapp.ts`.

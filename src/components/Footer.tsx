@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { MessageCircle, Facebook, ShieldCheck } from "lucide-react";
-import { createGeneralWhatsAppLink } from "@/lib/whatsapp";
+import { createGeneralWhatsAppLink, WHATSAPP_DISPLAY } from "@/lib/whatsapp";
 
 export default function Footer() {
   return (
@@ -88,7 +88,7 @@ export default function Footer() {
             <p className="text-xs text-slate-400">
               Direct Order & Support Hotline:
               <br />
-              <strong className="text-emerald-400 text-sm">01922458412</strong>
+              <strong className="text-emerald-400 text-sm">{WHATSAPP_DISPLAY}</strong>
             </p>
 
             <div className="flex items-center gap-3">
@@ -119,7 +119,7 @@ export default function Footer() {
         <div className="pt-8 text-center md:flex md:items-center md:justify-between text-xs text-slate-500">
           <p>© 2026 Micro-Shop BD. All rights reserved.</p>
           <p className="mt-2 md:mt-0 text-slate-400 font-medium">
-            Hotline: 01922458412 • Smarter Tools. Better You.
+            Hotline: {WHATSAPP_DISPLAY} • Smarter Tools. Better You.
           </p>
         </div>
       </div>

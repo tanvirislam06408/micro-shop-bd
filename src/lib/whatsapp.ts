@@ -2,7 +2,8 @@ import { Product } from "@/types/product";
 
 // CENTRAL WHATSAPP CONFIGURATION
 // User's official WhatsApp number for messages and support
-export const WHATSAPP_NUMBER = "8801922458412";
+export const WHATSAPP_NUMBER = "8801871138927";
+export const WHATSAPP_DISPLAY = "01871-138927";
 
 /**
  * Generates a WhatsApp web/app link with a pre-filled product purchase message

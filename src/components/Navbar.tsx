@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { MessageCircle, Menu, X, ShieldCheck } from "lucide-react";
-import { createGeneralWhatsAppLink } from "@/lib/whatsapp";
+import { createGeneralWhatsAppLink, WHATSAPP_DISPLAY } from "@/lib/whatsapp";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -90,7 +90,7 @@ export default function Navbar() {
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-600 text-white text-sm font-extrabold shadow-md shadow-emerald-500/20 hover:shadow-lg hover:shadow-emerald-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
             >
               <MessageCircle className="w-4 h-4 fill-white text-emerald-600" />
-              <span>01922458412</span>
+              <span>{WHATSAPP_DISPLAY}</span>
             </a>
           </div>
 
@@ -145,7 +145,7 @@ export default function Navbar() {
               className="w-full flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-extrabold shadow-md shadow-emerald-500/20"
             >
               <MessageCircle className="w-5 h-5 fill-white text-emerald-600" />
-              <span>Chat on WhatsApp (01922458412)</span>
+              <span>Chat on WhatsApp ({WHATSAPP_DISPLAY})</span>
             </a>
           </div>
         </div>
