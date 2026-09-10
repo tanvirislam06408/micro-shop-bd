@@ -2,14 +2,16 @@
 
 import { useState } from "react";
 import { Product } from "@/types/product";
-import { createWhatsAppLink, createGeneralWhatsAppLink } from "@/lib/whatsapp";
+import { createWhatsAppLink } from "@/lib/whatsapp";
 import ProductBrandLogo from "@/components/ProductBrandLogo";
+import OrderModal from "@/components/OrderModal";
 import {
   Check,
-  MessageCircle,
+  ShoppingBag,
   ArrowUpRight,
   Clock,
 } from "lucide-react";
+import Link from "next/link";
 
 interface ProductCardProps {
   product: Product;
@@ -18,6 +20,7 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   // Plan selection state if product has multiple plans
   const [selectedPlanIndex, setSelectedPlanIndex] = useState<number>(0);
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState<boolean>(false);
 
   const selectedPlan = product.plans
     ? product.plans[selectedPlanIndex]
@@ -131,7 +134,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         <div className="grid grid-cols-1 gap-2">
           {/* Primary Buy Now Button */}
-          <a
+          <Link
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
@@ -139,22 +142,27 @@ export default function ProductCard({ product }: ProductCardProps) {
           >
             <span>Buy Now via WhatsApp</span>
             <ArrowUpRight className="w-4 h-4" />
-          </a>
+          </Link>
 
-          {/* Secondary Chat on WhatsApp option */}
-          <a
-            href={createGeneralWhatsAppLink(
-              `Hi Micro-Shop BD, I have a question about ${product.name}.`
-            )}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full py-2.5 px-4 rounded-2xl bg-purple-50 hover:bg-purple-100/80 text-purple-800 font-semibold text-xs border border-purple-200/80 flex items-center justify-center gap-2 transition-colors"
+          {/* Secondary Make Order button */}
+          <button
+            type="button"
+            onClick={() => setIsOrderModalOpen(true)}
+            className="w-full py-2.5 px-4 rounded-2xl bg-purple-50 hover:bg-purple-100 text-purple-900 font-bold text-xs border border-purple-200/90 shadow-xs flex items-center justify-center gap-2 hover:border-purple-300 transition-all duration-200 active:scale-[0.98]"
           >
-            <MessageCircle className="w-3.5 h-3.5 text-emerald-600 fill-emerald-600/10" />
-            <span>Ask Question on WhatsApp</span>
-          </a>
+            <ShoppingBag className="w-3.5 h-3.5 text-purple-700" />
+            <span>Make Order</span>
+          </button>
         </div>
       </div>
+
+      {/* Order Modal with autofilled product, bKash & Nagad payments and customer details */}
+      <OrderModal
+        isOpen={isOrderModalOpen}
+        onClose={() => setIsOrderModalOpen(false)}
+        product={product}
+        initialPlanIndex={selectedPlanIndex}
+      />
     </div>
   );
 }

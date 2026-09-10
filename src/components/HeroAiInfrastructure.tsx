@@ -214,7 +214,7 @@ export const HeroAiInfrastructure = () => {
               className="cursor-pointer bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-600 hover:shadow-lg hover:shadow-emerald-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all px-5 py-2.5 rounded-full text-xs font-extrabold text-white shadow-md shadow-emerald-500/20 flex items-center gap-2"
             >
               <MessageCircle size={16} className="fill-white text-emerald-600" />
-              <span>WhatsApp: {WHATSAPP_DISPLAY}</span>
+              <span>WhatsApp</span>
             </TimelineAnimation>
           </div>
         </header>
