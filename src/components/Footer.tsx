@@ -1,11 +1,20 @@
+"use client";
+
 import Image from "next/image";
 import { MessageCircle, Facebook, ShieldCheck } from "lucide-react";
 import { createGeneralWhatsAppLink, WHATSAPP_DISPLAY } from "@/lib/whatsapp";
+import { motion } from "framer-motion";
 
 export default function Footer() {
   return (
     <footer className="bg-slate-900 text-white pt-16 pb-12 border-t border-purple-900/50 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-40px" }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10"
+      >
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-slate-800">
           {/* Brand Col */}
           <div className="md:col-span-5 space-y-4">
@@ -122,7 +131,7 @@ export default function Footer() {
             Hotline: {WHATSAPP_DISPLAY} • Smarter Tools. Better You.
           </p>
         </div>
-      </div>
+      </motion.div>
     </footer>
   );
 }

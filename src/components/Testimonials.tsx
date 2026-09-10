@@ -1,11 +1,20 @@
+"use client";
+
 import { testimonials } from "@/data/testimonials";
 import { Star, Quote, Sparkles } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function Testimonials() {
   return (
     <section className="py-16 md:py-24 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="text-center max-w-3xl mx-auto mb-16 space-y-3"
+        >
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-100 text-purple-800 text-xs font-semibold">
             <Sparkles className="w-4 h-4 text-purple-600" />
             <span>Customer Reviews</span>
@@ -18,13 +27,18 @@ export default function Testimonials() {
           <p className="text-base sm:text-lg text-slate-600">
             Real feedback from Bangladesh creators, developers, and professionals who upgraded their AI tools with Micro-Shop BD.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {testimonials.map((review) => (
-            <div
+          {testimonials.map((review, idx) => (
+            <motion.div
               key={review.id}
-              className="bg-purple-50/40 rounded-3xl p-6 border border-purple-100/90 shadow-sm hover:shadow-md hover:border-purple-300 transition-all duration-300 flex flex-col justify-between relative group"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.45, delay: idx * 0.1, ease: "easeOut" }}
+              whileHover={{ y: -6, transition: { duration: 0.2 } }}
+              className="bg-purple-50/40 rounded-3xl p-6 border border-purple-100/90 shadow-sm hover:shadow-md hover:border-purple-300 transition-colors duration-300 flex flex-col justify-between relative group cursor-default"
             >
               <Quote className="absolute top-4 right-4 w-8 h-8 text-purple-200/60 pointer-events-none" />
 
@@ -62,7 +76,7 @@ export default function Testimonials() {
                   </span>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

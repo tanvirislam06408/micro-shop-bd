@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { MessageCircle, Menu, X, ShieldCheck } from "lucide-react";
 import { createGeneralWhatsAppLink, WHATSAPP_DISPLAY } from "@/lib/whatsapp";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -121,35 +122,43 @@ export default function Navbar() {
       </div>
 
       {/* Mobile Drawer Menu */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden bg-white/95 backdrop-blur-xl border-b border-purple-100 px-4 pt-3 pb-6 space-y-2 shadow-xl animate-slide-down">
-          <div className="flex flex-col space-y-1">
-            {navLinks.map((link) => (
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="lg:hidden bg-white/95 backdrop-blur-xl border-b border-purple-100 px-4 pt-3 pb-6 space-y-2 shadow-xl overflow-hidden"
+          >
+            <div className="flex flex-col space-y-1">
+              {navLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-800 hover:bg-purple-50 hover:text-purple-700 transition-colors flex items-center justify-between"
+                >
+                  <span>{link.name}</span>
+                  <span className="text-purple-400 text-xs">→</span>
+                </a>
+              ))}
+            </div>
+            <div className="pt-3 border-t border-purple-100">
               <a
-                key={link.name}
-                href={link.href}
+                href={createGeneralWhatsAppLink()}
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-800 hover:bg-purple-50 hover:text-purple-700 transition-colors flex items-center justify-between"
+                className="w-full flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-extrabold shadow-md shadow-emerald-500/20"
               >
-                <span>{link.name}</span>
-                <span className="text-purple-400 text-xs">→</span>
+                <MessageCircle className="w-5 h-5 fill-white text-emerald-600" />
+                <span>Chat on WhatsApp ({WHATSAPP_DISPLAY})</span>
               </a>
-            ))}
-          </div>
-          <div className="pt-3 border-t border-purple-100">
-            <a
-              href={createGeneralWhatsAppLink()}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-extrabold shadow-md shadow-emerald-500/20"
-            >
-              <MessageCircle className="w-5 h-5 fill-white text-emerald-600" />
-              <span>Chat on WhatsApp ({WHATSAPP_DISPLAY})</span>
-            </a>
-          </div>
-        </div>
-      )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

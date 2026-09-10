@@ -5,6 +5,7 @@ import { Product } from "@/types/product";
 import { createWhatsAppLink } from "@/lib/whatsapp";
 import ProductBrandLogo from "@/components/ProductBrandLogo";
 import OrderModal from "@/components/OrderModal";
+import { motion } from "framer-motion";
 import {
   Check,
   ShoppingBag,
@@ -15,9 +16,10 @@ import Link from "next/link";
 
 interface ProductCardProps {
   product: Product;
+  index?: number;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, index = 0 }: ProductCardProps) {
   // Plan selection state if product has multiple plans
   const [selectedPlanIndex, setSelectedPlanIndex] = useState<number>(0);
   const [isOrderModalOpen, setIsOrderModalOpen] = useState<boolean>(false);
@@ -34,7 +36,14 @@ export default function ProductCard({ product }: ProductCardProps) {
   const whatsappUrl = createWhatsAppLink(product, selectedPlan);
 
   return (
-    <div className="bg-white rounded-3xl border border-purple-100 p-5 sm:p-6 shadow-sm hover:shadow-xl hover:shadow-purple-500/10 hover:border-purple-300 transition-all duration-300 flex flex-col justify-between relative group">
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-30px" }}
+      transition={{ duration: 0.45, delay: Math.min(index * 0.08, 0.4), ease: "easeOut" }}
+      whileHover={{ y: -6, transition: { duration: 0.2 } }}
+      className="bg-white rounded-3xl border border-purple-100 p-5 sm:p-6 shadow-sm hover:shadow-xl hover:shadow-purple-500/10 hover:border-purple-300 transition-colors duration-300 flex flex-col justify-between relative group"
+    >
       {/* Top badges & Brand Logo */}
       <div className="flex items-center justify-between gap-2 mb-4">
         <div className="w-14 h-14 rounded-2xl bg-white border border-slate-200/80 p-2 shadow-xs flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:border-purple-300 group-hover:shadow-md transition-all duration-200">
@@ -163,6 +172,6 @@ export default function ProductCard({ product }: ProductCardProps) {
         product={product}
         initialPlanIndex={selectedPlanIndex}
       />
-    </div>
+    </motion.div>
   );
 }

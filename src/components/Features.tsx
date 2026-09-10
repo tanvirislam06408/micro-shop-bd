@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Tag,
   Zap,
@@ -7,6 +9,7 @@ import {
   Smartphone,
   Sparkles,
 } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function Features() {
   const featureList = [
@@ -57,7 +60,13 @@ export default function Features() {
   return (
     <section id="features" className="py-16 md:py-24 bg-white relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="text-center max-w-3xl mx-auto mb-12 space-y-3"
+        >
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-100 text-purple-800 text-xs font-semibold">
             <Sparkles className="w-4 h-4 text-purple-600" />
             <span>Why Choose Us</span>
@@ -71,15 +80,20 @@ export default function Features() {
             We provide a hassle-free, secure, and affordable way for everyone in
             Bangladesh to access world-class artificial intelligence tools.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featureList.map((item, idx) => {
             const Icon = item.icon;
             return (
-              <div
+              <motion.div
                 key={idx}
-                className="p-6 rounded-3xl bg-purple-50/40 border border-purple-100/80 hover:bg-white hover:border-purple-300 hover:shadow-lg hover:shadow-purple-500/5 transition-all duration-300 group"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.45, delay: idx * 0.08, ease: "easeOut" }}
+                whileHover={{ y: -6, transition: { duration: 0.2 } }}
+                className="p-6 rounded-3xl bg-purple-50/40 border border-purple-100/80 hover:bg-white hover:border-purple-300 hover:shadow-lg hover:shadow-purple-500/5 transition-colors duration-300 group cursor-default"
               >
                 <div
                   className={`w-12 h-12 rounded-2xl ${item.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200`}
@@ -92,7 +106,7 @@ export default function Features() {
                 <p className="text-sm text-slate-600 leading-relaxed">
                   {item.description}
                 </p>
-              </div>
+              </motion.div>
             );
           })}
         </div>

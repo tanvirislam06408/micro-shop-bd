@@ -110,21 +110,18 @@ export default function GoogleAISection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-y-8 sm:gap-y-12 md:gap-y-14 gap-x-8 lg:gap-x-12 mb-16">
           {/* Row 1: 3 Cards (Middle card raised with shadow and desktop scale) */}
           {features.slice(0, 3).map((f, i) => (
-            <FeatureCard key={i} {...f} />
+            <FeatureCard key={i} index={i} {...f} />
           ))}
 
           {/* Row 2: 2 Cards Centered */}
           <div className="md:col-span-3 flex flex-col md:flex-row justify-center gap-y-8 sm:gap-y-12 md:gap-y-14 gap-x-8 lg:gap-x-12">
             {features.slice(3).map((f, i) => (
               <div key={i} className="md:w-1/3">
-                <FeatureCard {...f} />
+                <FeatureCard index={i + 3} {...f} />
               </div>
             ))}
           </div>
         </div>
-
-        {/* Central Product Launch & WhatsApp Activation Dock */}
-        
       </div>
     </section>
   );
@@ -136,16 +133,23 @@ const FeatureCard = ({
   title,
   desc,
   highlight,
+  index = 0,
 }: {
   icon: any;
   badge?: string;
   title: string;
   desc: string;
   highlight?: boolean;
+  index?: number;
 }) => (
-  <div
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: "-40px" }}
+    transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
+    whileHover={{ y: -6, transition: { duration: 0.2 } }}
     className={cn(
-      "flex flex-col items-center group transition-all duration-300 p-6 sm:p-8 rounded-3xl bg-white/85 backdrop-blur-md border border-purple-100/90 shadow-sm hover:bg-white hover:border-purple-300 hover:shadow-xl hover:shadow-purple-500/10",
+      "flex flex-col items-center group transition-colors duration-300 p-6 sm:p-8 rounded-3xl bg-white/85 backdrop-blur-md border border-purple-100/90 shadow-sm hover:bg-white hover:border-purple-300 hover:shadow-xl hover:shadow-purple-500/10 cursor-default",
       highlight &&
         "md:scale-105 bg-white border-purple-300 shadow-2xl shadow-purple-500/15 ring-2 ring-purple-500/20"
     )}
@@ -180,6 +184,6 @@ const FeatureCard = ({
     <p className="text-slate-600 leading-relaxed text-sm max-w-xs mx-auto text-pretty text-center">
       {desc}
     </p>
-  </div>
+  </motion.div>
 );
 

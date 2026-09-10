@@ -6,6 +6,15 @@ import ProductBrandLogo from "@/components/ProductBrandLogo";
 import { BkashLogo, NagadLogo } from "@/components/PaymentLogos";
 import { WHATSAPP_NUMBER } from "@/lib/whatsapp";
 import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
   X,
   CheckCircle2,
   Copy,
@@ -41,7 +50,7 @@ const PAYMENT_DETAILS = {
     name: "Nagad",
     number: "01922458412",
     type: "Personal (Send Money)",
-    color: "#F7941D",
+    color: "#ED1C24",
     bgLight: "bg-amber-50/70",
     borderLight: "border-amber-200",
     borderActive: "border-[#ED1C24]",
@@ -82,37 +91,14 @@ export default function OrderModal({
   const currentPrice = currentPlan ? currentPlan.price : product.price;
   const currentDuration = currentPlan ? currentPlan.name : product.duration;
 
-  // Handle escape key to close
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) {
-        onClose();
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
-
-  // Prevent background scrolling when modal is open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, [isOpen]);
-
-  if (!isOpen) return null;
-
   const currentPayment = PAYMENT_DETAILS[paymentMethod];
 
   const handleCopyNumber = () => {
-    navigator.clipboard.writeText(currentPayment.number);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(currentPayment.number);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
   };
 
   const validateForm = () => {
@@ -166,7 +152,9 @@ Please confirm my order and deliver the login / activation credentials. Thank yo
     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
     // Open WhatsApp in new tab
-    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+    if (typeof window !== "undefined") {
+      window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+    }
 
     setIsSubmitting(false);
     setIsSubmitted(true);
@@ -183,40 +171,43 @@ Please confirm my order and deliver the login / activation credentials. Thank yo
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
-      {/* Backdrop */}
-      <div
-        onClick={handleResetModal}
-        className="fixed inset-0 bg-slate-950/70 backdrop-blur-sm transition-opacity animate-in fade-in duration-200"
-      />
-
-      {/* Modal Container */}
-      <div className="relative w-full max-w-xl bg-white rounded-3xl shadow-2xl border border-purple-100 overflow-hidden z-10 my-auto animate-in zoom-in-95 duration-200 flex flex-col max-h-[92vh]">
-        
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) {
+          handleResetModal();
+        }
+      }}
+    >
+      <DialogContent
+        hideCloseButton
+        className="w-full max-w-xl max-h-[92vh] flex flex-col p-0 overflow-hidden border border-purple-100 bg-white shadow-2xl rounded-3xl gap-0"
+      >
         {/* Modal Header */}
-        <div className="bg-gradient-to-r from-purple-900 via-indigo-900 to-purple-800 text-white px-5 sm:px-6 py-4 flex items-center justify-between shrink-0">
+        <DialogHeader className="bg-gradient-to-r from-purple-900 via-indigo-900 to-purple-800 text-white px-5 sm:px-6 py-4 flex flex-row items-center justify-between space-y-0 shrink-0">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center text-purple-200">
+            <div className="w-8 h-8 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center text-purple-200 shrink-0">
               <Receipt className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-bold text-base sm:text-lg leading-tight">
+              <DialogTitle className="font-bold text-base sm:text-lg leading-tight text-white">
                 {isSubmitted ? "Order Submitted" : "Make an Order"}
-              </h3>
-              <p className="text-xs text-purple-200">
+              </DialogTitle>
+              <DialogDescription className="text-xs text-purple-200 mt-0.5">
                 Instant delivery via WhatsApp & Email
-              </p>
+              </DialogDescription>
             </div>
           </div>
 
           <button
+            type="button"
             onClick={handleResetModal}
-            className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
+            className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors focus:outline-none"
             aria-label="Close modal"
           >
             <X className="w-4 h-4" />
           </button>
-        </div>
+        </DialogHeader>
 
         {/* Scrollable Content Body */}
         <div className="p-5 sm:p-6 overflow-y-auto space-y-6">
@@ -282,6 +273,7 @@ Please confirm my order and deliver the login / activation credentials. Thank yo
                   <span>Open WhatsApp Order</span>
                 </a>
                 <button
+                  type="button"
                   onClick={handleResetModal}
                   className="py-3 px-5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm transition-colors"
                 >
@@ -335,9 +327,9 @@ Please confirm my order and deliver the login / activation credentials. Thank yo
               {/* Plan Switcher inside modal if product has multiple plans */}
               {product.plans && product.plans.length > 1 && (
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-700">
+                  <Label className="text-xs font-bold text-slate-700">
                     Choose Subscription Plan:
-                  </label>
+                  </Label>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {product.plans.map((plan, idx) => (
                       <button
@@ -360,12 +352,14 @@ Please confirm my order and deliver the login / activation credentials. Thank yo
 
               {/* Payment Method Selector */}
               <div className="space-y-2 pt-1">
-                <label className="text-xs font-bold text-slate-800 flex items-center justify-between">
-                  <span>Select Payment Method:</span>
+                <div className="flex items-center justify-between">
+                  <Label className="text-xs font-bold text-slate-800">
+                    Select Payment Method:
+                  </Label>
                   <span className="text-[11px] font-normal text-slate-500">
                     bKash / Nagad Send Money
                   </span>
-                </label>
+                </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   {/* bKash Option */}
@@ -379,7 +373,7 @@ Please confirm my order and deliver the login / activation credentials. Thank yo
                     }`}
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <BkashLogo className="h-6" />
+                      <BkashLogo className="h-7" />
                       <div
                         className={`w-4 h-4 rounded-full border flex items-center justify-center ${
                           paymentMethod === "bkash"
@@ -408,7 +402,7 @@ Please confirm my order and deliver the login / activation credentials. Thank yo
                     }`}
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <NagadLogo className="h-6" />
+                      <NagadLogo className="h-7" />
                       <div
                         className={`w-4 h-4 rounded-full border flex items-center justify-center ${
                           paymentMethod === "nagad"
@@ -471,14 +465,15 @@ Please confirm my order and deliver the login / activation credentials. Thank yo
                 </div>
               </div>
 
-              {/* Customer Contact & Verification Fields */}
+              {/* Customer Contact & Verification Fields using Shadcn Input & Label */}
               <div className="space-y-3.5 pt-1">
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                <div className="space-y-1.5">
+                  <Label htmlFor="customer-email" className="flex items-center gap-1.5 text-xs font-bold text-slate-800">
                     <Mail className="w-3.5 h-3.5 text-purple-600" />
                     <span>Your Gmail / Email Address <span className="text-rose-500">*</span></span>
-                  </label>
-                  <input
+                  </Label>
+                  <Input
+                    id="customer-email"
                     type="email"
                     required
                     value={customerEmail}
@@ -487,11 +482,7 @@ Please confirm my order and deliver the login / activation credentials. Thank yo
                       if (errors.email) setErrors((prev) => ({ ...prev, email: undefined }));
                     }}
                     placeholder="e.g. yourname@gmail.com"
-                    className={`w-full px-3.5 py-2.5 rounded-xl border text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 transition-all ${
-                      errors.email
-                        ? "border-rose-400 bg-rose-50/30 focus:ring-rose-200"
-                        : "border-slate-200 bg-white focus:border-purple-500 focus:ring-purple-200"
-                    }`}
+                    className={errors.email ? "border-rose-400 bg-rose-50/30 focus:ring-rose-200" : ""}
                   />
                   {errors.email ? (
                     <p className="text-xs text-rose-600 font-medium">{errors.email}</p>
@@ -502,12 +493,13 @@ Please confirm my order and deliver the login / activation credentials. Thank yo
                   )}
                 </div>
 
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                <div className="space-y-1.5">
+                  <Label htmlFor="customer-whatsapp" className="flex items-center gap-1.5 text-xs font-bold text-slate-800">
                     <Smartphone className="w-3.5 h-3.5 text-emerald-600" />
                     <span>Your WhatsApp Number <span className="text-rose-500">*</span></span>
-                  </label>
-                  <input
+                  </Label>
+                  <Input
+                    id="customer-whatsapp"
                     type="tel"
                     required
                     value={customerWhatsApp}
@@ -516,11 +508,7 @@ Please confirm my order and deliver the login / activation credentials. Thank yo
                       if (errors.whatsapp) setErrors((prev) => ({ ...prev, whatsapp: undefined }));
                     }}
                     placeholder="e.g. 017XXXXXXXX"
-                    className={`w-full px-3.5 py-2.5 rounded-xl border text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 transition-all ${
-                      errors.whatsapp
-                        ? "border-rose-400 bg-rose-50/30 focus:ring-rose-200"
-                        : "border-slate-200 bg-white focus:border-purple-500 focus:ring-purple-200"
-                    }`}
+                    className={errors.whatsapp ? "border-rose-400 bg-rose-50/30 focus:ring-rose-200" : ""}
                   />
                   {errors.whatsapp ? (
                     <p className="text-xs text-rose-600 font-medium">{errors.whatsapp}</p>
@@ -531,19 +519,19 @@ Please confirm my order and deliver the login / activation credentials. Thank yo
                   )}
                 </div>
 
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-slate-800 flex items-center justify-between">
+                <div className="space-y-1.5">
+                  <Label htmlFor="customer-trxid" className="flex items-center justify-between text-xs font-bold text-slate-800">
                     <span className="flex items-center gap-1.5">
                       <ShieldCheck className="w-3.5 h-3.5 text-purple-600" />
                       <span>bKash / Nagad TrxID or Sender Number (Optional)</span>
                     </span>
-                  </label>
-                  <input
+                  </Label>
+                  <Input
+                    id="customer-trxid"
                     type="text"
                     value={transactionId}
                     onChange={(e) => setTransactionId(e.target.value)}
                     placeholder="e.g. 9H82KA92 or your sending mobile number"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:border-purple-500 focus:ring-purple-200 transition-all"
                   />
                   <p className="text-[11px] text-slate-500">
                     If you already paid, paste the TrxID here to speed up verification.
@@ -569,7 +557,7 @@ Please confirm my order and deliver the login / activation credentials. Thank yo
             </form>
           )}
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }
